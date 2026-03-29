@@ -1,158 +1,140 @@
-# Customer Segmentation using K-Means Clustering
+# 🎯 Customer Segmentation using K-Means Clustering
 
-## Project Overview
-This project focuses on **customer segmentation** using the **Mall Customers dataset**.  
-The main goal is to divide customers into different groups based on their purchasing behavior so businesses can better understand their customers and create targeted marketing strategies.
-
-In this project, I performed:
-- Data loading and inspection
-- Data cleaning
-- Exploratory Data Analysis (EDA)
-- Customer grouping using **K-Means Clustering**
-- Visualization of the final customer segments
+> **Unsupervised Machine Learning project** that segments mall customers into distinct behavioral groups — enabling businesses to personalize marketing, optimize budgets, and improve customer retention.
 
 ---
 
-## Dataset
-The dataset used in this project contains the following columns:
+## 🧩 Business Problem
 
-- **CustomerID** – Unique ID of each customer
-- **Gender** – Male or Female
-- **Age** – Age of the customer
-- **Annual Income (k$)** – Customer's yearly income
-- **Spending Score (1-100)** – Score assigned based on customer spending behavior
+Businesses often treat all customers the same — same promotions, same messaging, same offers. This is inefficient and costly.
 
----
+**The question this project answers:**
+> *"Which customers behave similarly, and how can we target each group more effectively?"*
 
-## Objective
-The objective of this project is to identify different customer groups based on:
-- **Annual Income**
-- **Spending Score**
-
-This helps businesses:
-- understand customer behavior
-- identify high-value customers
-- create better marketing campaigns
-- improve customer targeting
+By identifying distinct customer segments based on income and spending behavior, marketing teams can:
+- Focus high-effort campaigns on **high-value customers**
+- Re-engage **low-spending, high-income** customers who have untapped potential
+- Avoid wasting budget on the wrong audience
 
 ---
 
-## Technologies Used
-- Python
-- Jupyter Notebook
-- Pandas
-- NumPy
-- Matplotlib
-- Seaborn
-- Scikit-learn
+## 📊 Dataset
+
+**Mall Customers Dataset** — 200 customer records with the following features:
+
+| Feature | Description |
+|---|---|
+| CustomerID | Unique identifier (dropped — not a behavioral feature) |
+| Gender | Male / Female |
+| Age | Customer age |
+| Annual Income (k$) | Yearly income in thousands |
+| Spending Score (1–100) | Spending behavior score assigned by the mall |
 
 ---
 
-## Project Workflow
+## 🔍 Project Workflow
 
-### 1. Importing Libraries
-I imported the required Python libraries for:
-- data handling
-- visualization
-- machine learning
+```
+Data Loading → Inspection → Cleaning → EDA → Feature Selection → Elbow Method → K-Means → Business Interpretation
+```
 
-### 2. Loading the Dataset
-The dataset was loaded into a Pandas DataFrame using `pd.read_csv()`.
+### 1. Exploratory Data Analysis (EDA)
+Explored distributions, gender breakdowns, age-group patterns, and income vs spending relationships using:
+- Distribution plots (Age, Income, Spending Score)
+- Violin plots by gender
+- Age-group average income & spending analysis
+- Income vs Spending Score scatter plot
 
-### 3. Data Inspection
-I checked:
-- first few rows with `head()`
-- last few rows with `tail()`
-- dataset shape
-- statistical summary
-- data types
+### 2. Feature Selection
+Selected **Annual Income** and **Spending Score** as clustering features — these two variables best capture purchasing behavior without introducing noise from age or gender.
 
-### 4. Data Cleaning
-I removed the `CustomerID` column because it is only an identifier and does not help in customer behavior analysis.
+### 3. Finding Optimal Clusters — Elbow Method
+Tested K values from 1–10, calculated **WCSS (Within-Cluster Sum of Squares)**, and identified the "elbow" point:
 
-### 5. Exploratory Data Analysis (EDA)
-I explored the data using different plots:
-- distribution plots for Age, Annual Income, and Spending Score
-- gender count plot
-- violin plots by gender
-- age-group analysis
-- average income and spending score by age group
-- spending score range analysis
-- scatter plot of income vs spending score
+> ✅ **Optimal K = 5** — best balance between cluster simplicity and accuracy
 
-### 6. Feature Selection
-For clustering, I selected:
-- **Annual Income (k$)**
-- **Spending Score (1-100)**
-
-These two features were used to identify customer groups.
-
-### 7. Why K-Means Clustering?
-K-Means was used because this project is about **grouping similar customers together**.  
-It is a simple and effective clustering algorithm that works well when we want to find natural groups in numeric data.
-
-In simple terms, K-Means helps answer this question:
-
-**Which customers behave similarly in terms of income and spending?**
-
-### 8. Finding the Best Number of Clusters
-I used the **Elbow Method** to find the optimal number of clusters.
-
-- I tested cluster values from 1 to 10
-- calculated WCSS (Within-Cluster Sum of Squares)
-- plotted the elbow graph
-- selected **K = 5** as the best number of clusters
-
-### 9. Applying K-Means
-After choosing `K = 5`, I applied K-Means clustering to group customers into 5 segments.
-
-### 10. Final Visualization
-Finally, I plotted the clusters using a scatter plot, where:
-- X-axis = Annual Income
-- Y-axis = Spending Score
-- different colors = different customer segments
+### 4. K-Means Clustering
+Applied K-Means with K=5 to segment all 200 customers into 5 distinct groups.
 
 ---
 
-## Meaning of K in K-Means
-In K-Means, **K** means the number of groups (clusters) we want to create.
+## 🗂️ The 5 Customer Segments
 
-For example:
-- K = 2 → 2 groups
-- K = 3 → 3 groups
-- K = 5 → 5 groups
+| Segment | Income | Spending Score | Business Label | Strategy |
+|---|---|---|---|---|
+| 1 | High | High | 💎 Champions | Reward & retain — VIP programs |
+| 2 | High | Low | 💤 Potential Sleepers | Re-engagement campaigns, exclusive offers |
+| 3 | Low | High | 🛍️ Impulsive Buyers | Upsell bundles, loyalty rewards |
+| 4 | Low | Low | 🔍 At-Risk | Low priority — cost-efficient outreach |
+| 5 | Average | Average | 🎯 Mainstream | Standard marketing, volume-based offers |
 
-In this project, I selected **K = 5** because the Elbow Method showed that 5 clusters gave a good balance between simplicity and accuracy.
-
----
-
-## Key Insight
-This project shows that customers can be divided into different groups such as:
-- high income, high spending
-- high income, low spending
-- low income, high spending
-- low income, low spending
-- average customers
-
-These segments can help businesses make better decisions.
+> This business interpretation is the **most important output** — clustering alone is not enough. Naming and strategizing each segment is what makes this actionable.
 
 ---
 
-## Conclusion
-This project successfully applied **K-Means Clustering** to segment mall customers based on their annual income and spending score.  
-It demonstrates how machine learning can be used in a simple and practical way for business decision-making and customer analysis.
+## 💡 Key Business Insights
+
+- **Segment 1 (Champions)** are the highest-value customers — retention is cheaper than acquisition
+- **Segment 2 (Sleepers)** have the income to spend more but aren't — a targeted incentive campaign could unlock significant revenue
+- **Segment 3 (Impulsive Buyers)** spend despite lower income — price-sensitive offers and loyalty programs will retain them
+- The mall should allocate **~60% of marketing budget** toward Segments 1, 2, and 3
 
 ---
 
-## Future Improvements
-Some possible improvements for this project:
-- include Age in clustering
-- scale the features before clustering
-- analyze each cluster in more detail
-- assign business-friendly names to each cluster
-- build an interactive dashboard for visualization
+## 🛠️ Technologies Used
+
+| Tool | Purpose |
+|---|---|
+| Python | Core programming language |
+| Pandas & NumPy | Data manipulation and cleaning |
+| Matplotlib & Seaborn | EDA visualizations |
+| Scikit-learn | K-Means clustering, Elbow Method |
+| Jupyter Notebook | Interactive analysis environment |
 
 ---
 
-## Author
-**Sanjeeb Sapkota**
+## 📁 Project Structure
+
+```
+Customer-Segmentation-K-Means/
+│
+├── customer_segmentation.ipynb   # Full analysis notebook
+├── Mall_Customers.csv            # Dataset
+├── README.md                     # Project documentation
+└── images/                       # Visualization outputs
+    ├── elbow_curve.png
+    ├── cluster_scatter.png
+    └── eda_plots.png
+```
+
+---
+
+## 🚀 How to Run
+
+```bash
+# Clone the repository
+git clone https://github.com/sanjeebsapkota/Customer-Segmentation-using-K-Means-Clustering.git
+
+# Install dependencies
+pip install pandas numpy matplotlib seaborn scikit-learn jupyter
+
+# Launch Jupyter Notebook
+jupyter notebook customer_segmentation.ipynb
+```
+
+---
+
+
+---
+
+
+## 👤 Author
+
+**Sanjeeb Sapkota** | Data & Business Analytics | Python | Power BI | Tableau | SAP B1
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sanjeeb%20Sapkota-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/sanjeeb-sapkota-07b625226)
+[![GitHub](https://img.shields.io/badge/GitHub-sanjeebsapkota-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sanjeebsapkota)
+
+---
+
+*⭐ Star this repo if you found it useful!*
